@@ -1,6 +1,3 @@
-
-
-
 class Temperature:
     """Represents a temperature value."""
 
