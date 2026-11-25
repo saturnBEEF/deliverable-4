@@ -1,0 +1,7 @@
+Declaration of generative AI use
+
+I used OpenAI Codex to support my work on the tests for Task 1. Initially, Codex generated a complete test script and supporting files. I then chose to rewrite the tests myself, using step-by-step guidance rather than submitting the original generated script.
+
+Codex helped explain pytest, parametrization, exception testing, type hints, floating-point tolerance and comparison methods. It also provided pseudocode, code examples and feedback on my saved code. Some examples were directly adapted into my tests. I ran the tests and used the feedback to correct mistakes.
+
+Codex also helped me create a Jupyter notebook, suggested its introductory text and reviewed the tests against the assignment requirements. The final recorded test run showed 56 passing test cases. The existing Temperature class was not modified during this work.
