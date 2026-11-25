@@ -1,0 +1,37 @@
+Temperature Class Conversation Summary
+
+Class setup and attributes
+- Use properties without setters for read-only public attributes.
+
+String representation
+- __str__ controls readable output and is called by print(t) or str(t).
+
+Conversions and errors
+- to_celsius, to_fahrenheit, and to_kelvin return numeric values.
+- convert_to returns a new Temperature object in the requested unit.
+- Method names must match the name used when calling them.
+- ValueError is raised for invalid units; catch it with try/except to print
+  the message and continue.
+
+Tolerance and comparisons
+- Tolerance is a margin for comparing floating-point values; it has no effect
+  unless the code uses it.
+- Convert both temperatures to a common unit, such as Kelvin, before comparing.
+- Python uses __eq__ for ==. __equal_to__ is not a recognized special method.
+- Return the special value NotImplemented, not the string "NotImplemented",
+  for operand types a comparison method does not handle.
+- Comparison methods may receive objects other than Temperature, so their
+  other parameter should be annotated as object.
+
+Libraries
+- Pint supports unit-aware quantities and conversions.
+- math.isclose can compare approximate numeric values after converting them
+  to the same unit.
+
+Code review notes for TemperatureClass.py
+- __eq__ should return a boolean comparison against the tolerance, rather
+  than returning the numeric difference.
+- The absolute-zero check allows values up to the tolerance below 0 K, and
+  NaN can pass the check.
+- Top-level demonstration statements run when the module is imported; a
+  __main__ guard can prevent that.
