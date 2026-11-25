@@ -45,3 +45,81 @@ def test_below_absolute_zero(value: int, unit: str) -> None:
     """Test that a temperature below absolute zero raises a ValueError."""
     with pytest.raises(ValueError):
         Temperature(value, unit=unit)
+
+@pytest.mark.parametrize("celsius, expected_fahrenheit", [
+    (-273.15, -459.67),
+    (-40.0, -40.0),
+    (0.0, 32.0),
+    (37.0, 98.6),
+    (100.0, 212.0)
+])
+def test_celsius_to_fahrenheit(celsius: float, expected_fahrenheit: float) -> None:
+    """Test conversion from Celsius to Fahrenheit."""
+    temperature = Temperature(celsius, "C")
+    result = temperature.to_fahrenheit()
+    assert result == pytest.approx(expected_fahrenheit, abs=1e-9, rel=0)
+
+@pytest.mark.parametrize("celsius, expected_kelvin", [
+    (-273.15, 0.0),
+    (-40.0, 233.15),
+    (0.0, 273.15),
+    (37.0, 310.15),
+    (100.0, 373.15)
+])
+def test_celsius_to_kelvin(celsius: float, expected_kelvin: float) -> None:
+    """Test conversion from Celsius to Kelvin."""
+    temperature = Temperature(celsius, "C")
+    result = temperature.to_kelvin()
+    assert result == pytest.approx(expected_kelvin, abs=1e-9, rel=0)
+
+@pytest.mark.parametrize("fahrenheit, expected_celsius", [
+    (-459.67, -273.15),
+    (-40.0, -40.0),
+    (32.0, 0.0),
+    (98.6, 37.0),
+    (212.0, 100.0)
+])
+def test_fahrenheit_to_celsius(fahrenheit: float, expected_celsius: float) -> None:
+    """Test conversion from Fahrenheit to Celsius."""
+    temperature = Temperature(fahrenheit, "F")
+    result = temperature.to_celsius()
+    assert result == pytest.approx(expected_celsius, abs=1e-9, rel=0)
+
+@pytest.mark.parametrize("fahrenheit, expected_kelvin", [
+    (-459.67, 0.0),
+    (-40.0, 233.15),
+    (32.0, 273.15),
+    (98.6, 310.15),
+    (212.0, 373.15)
+])
+def test_fahrenheit_to_kelvin(fahrenheit: float, expected_kelvin: float) -> None:
+    """Test conversion from Fahrenheit to Kelvin."""
+    temperature = Temperature(fahrenheit, "F")
+    result = temperature.to_kelvin()
+    assert result == pytest.approx(expected_kelvin, abs=1e-9, rel=0)
+
+@pytest.mark.parametrize("kelvin, expected_celsius", [
+    (0.0, -273.15),
+    (233.15, -40.0),
+    (273.15, 0.0),
+    (310.15, 37.0),
+    (373.15, 100.0)
+])
+def test_kelvin_to_celsius(kelvin: float, expected_celsius: float) -> None:
+    """Test conversion from Kelvin to Celsius."""
+    temperature = Temperature(kelvin, "K")
+    result = temperature.to_celsius()
+    assert result == pytest.approx(expected_celsius, abs=1e-9, rel=0)
+
+@pytest.mark.parametrize("kelvin, expected_fahrenheit", [
+    (0.0, -459.67),
+    (233.15, -40.0),
+    (273.15, 32.0),
+    (310.15, 98.6),
+    (373.15, 212.0)
+])
+def test_kelvin_to_fahrenheit(kelvin: float, expected_fahrenheit: float) -> None:
+    """Test conversion from Kelvin to Fahrenheit."""
+    temperature = Temperature(kelvin, "K")
+    result = temperature.to_fahrenheit()
+    assert result == pytest.approx(expected_fahrenheit, abs=1e-9, rel=0)
