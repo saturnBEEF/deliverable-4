@@ -81,7 +81,7 @@ class Temperature:
         return f"{self.value:.2f}°{self.unit}" if self.unit in ("C", "F") else f"{self.value:.2f} K"
 
 
-t = Temperature(-25, "u")
+t = Temperature(-25, "c")
 print(t.convert_to("f"))
 print(t.convert_to("k"))   
 print(t.convert_to("C"))
