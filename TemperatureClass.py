@@ -1,13 +1,30 @@
 class Temperature:
     """Represents a temperature value."""
-
+    _tolerance = 1e-9
     _valid_units = ("C", "F", "K")
 
-    def __init__(self, value: float, unit: str = "C", tolerance: float = 1e-9):
+    def __init__(self, value: float, unit: str = "C"):
         """Initializes a temperature object."""
+        unit = unit.upper()
+        if unit not in self._valid_units:
+            raise ValueError(F"Invalid unit: {unit}. Valid units are: {self._valid_units}")
+
+        value = float(value)
+        kelvin = self._to_kelvin(value, unit)
+        if kelvin < self._tolerance:
+            raise ValueError("Temperature in Kelvin cannot be negative.")
+
         self._value = value
-        self._unit = unit.upper()
-        self.tolerance = tolerance
+        self._unit = unit
+
+    def _to_kelvin(self, value: float, unit: str) -> float:
+        """Check for negative kelvin value."""
+        if unit == "K":
+            return value
+        elif unit == "C":
+            return value + 273.15
+        elif unit == "F":
+            return (value - 32) * (5 / 9) + 273.15
 
     @property
     def value(self) -> float:
@@ -39,40 +56,37 @@ class Temperature:
 
     def to_kelvin(self) -> float:
         """Converts temperature to kelvin."""
-        if self.unit == "K":
-            return self.value
-        elif self.unit == "C":
-            return self.value + 273.15
-        elif self.unit == "F":
-            return (self.value - 32) * (5 / 9) + 273.15
+        return self._to_kelvin(self.value, self.unit)
 
     def convert_to(self, target_unit: str) -> Temperature:
-        """ """
+        """Converts the temperature to the target unit."""
+
         target_unit = target_unit.upper()
         if target_unit not in self._valid_units:
             raise ValueError(F"Invalid target unit: {target_unit}. Valid units are: {self._valid_units}")
 
-        if target_unit == "C":
-            new_value = self.to_celsius
-        elif target_unit == "F":
-            new_value = self.to_fahrenheit
-        elif target_unit == "K":
-            new_value = self.to_kelvin
-        return Temperature(new_value(), target_unit, self.tolerance)
+        conversion = {
+            "C": self.to_celsius,
+            "F": self.to_fahrenheit,
+            "K": self.to_kelvin
+        }
+        return Temperature(conversion[target_unit](), target_unit)
 
     def __repr__(self) -> str:
         """Returns a representation of the temperature."""
-        return f"Temperature({self.value}, '{self.unit}')"
+        return f"Temperature({self.value:.1f}, '{self.unit}')"
 
     def __str__(self) -> str:
         """ returns a readable string representation of the temperature."""
-        return f"{self.value} °{self.unit}" if self.unit in ("C", "F") else f"{self.value} K"
+        return f"{self.value:.2f}°{self.unit}" if self.unit in ("C", "F") else f"{self.value:.2f} K"
 
 
-t = Temperature(25, "C")
-print(t.convert_to("f"))   # 77.0 °F
-print(t.convert_to("k"))   # 298.15 K
+t = Temperature(-25, "u")
+print(t.convert_to("f"))
+print(t.convert_to("k"))   
 print(t.convert_to("C"))
-print(t.convert_to("X"))   # 25.0 °C
+#print(t.convert_to("X"))   
 
-print(repr(t))  # 25.0 °C
+print(repr(t))  
+print(str(t))
+
