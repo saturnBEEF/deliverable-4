@@ -1,0 +1,35 @@
+1. User: Asked for help implementing Task 2 (Fraction class) in Deliverable 4. 
+Answer: Provided the complete code for fraction.py, pytest unit tests in test_fraction.py, and Jupyter Notebook integration cells.
+
+2. User: Asked for pseudo-code and structural guidance on initializing and validating the Fraction class attributes. 
+Answer: Explained enforcing integer type checking, validating strictly positive denominators (> 0), and applying automatic fraction reduction using math.gcd.
+
+3. User: Asked for pseudo-code and logic guidance on implementing all 6 comparison dunder methods in Fraction. 
+Answer: Advised using exact cross-multiplication (a * d < c * b) to perform relational comparisons without floating-point precision loss.
+
+4. User: Asked how to implement arithmetic dunder methods and support interoperability between Fraction objects and integers. 
+Answer: Detailed converting integers to Fraction(int, 1) and implementing addition, subtraction, multiplication, division, and reverse methods (__radd__, __rmul__).
+
+5. User: Shared an error message screenshot regarding missing Git configuration when pushing and pulling to GitHub. 
+Answer: Provided terminal commands to configure global git user.name and user.email settings.
+
+6. User: Asked why Git required user credentials despite being signed into GitHub within VS Code. 
+Answer: Clarified the technical difference between VS Code GitHub account authentication and local Git commit authorship metadata.
+
+7. User: Reported a ModuleNotFoundError: No module named 'pytest' error when running test execution. 
+Answer: Advised installing pytest using %pip install pytest inside the notebook or via terminal.
+
+8. User: Shared a traceback error showing a conflict between Python 3.13 (where pytest was installed) and Python 3.15 (which VS Code executed). 
+Answer: Diagnosed the dual Python environment conflict and provided targeted commands to execute pytest under the specific Python executable path.
+
+9. User: Asked how to permanently resolve or eliminate multiple Python interpreter conflicts in VS Code. 
+Answer: Outlined steps to lock the project interpreter via VS Code's 'Python: Select Interpreter' command or create a isolated virtual environment (venv).
+
+10. User: Asked for guidance when prompted to select a Python environment while running !pytest test_fraction.py -v in Jupyter. 
+Answer: Guided selecting the active Python 3.13 kernel in the VS Code Jupyter extension and using sys.executable.
+
+11. User: Asked for a 2.5-minute video narration script explaining the Task 2 Fraction implementation. 
+Answer: Drafted a structured video presentation script detailing class design, dunder methods, and pytest verification.
+
+12. User: Requested shortening the video script to 2 minutes as a single continuous English text block. 
+Answer: Delivered a condensed, continuous 2-minute narration script optimized for easy reading during video recording.
