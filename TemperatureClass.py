@@ -1,16 +1,19 @@
 class Temperature:
     """Represents a temperature value."""
+    # class constants
     _tolerance = 1e-9
     _valid_units = ("C", "F", "K")
 
     def __init__(self, value: float, unit: str = "C"):
         """Initializes a temperature object."""
         unit = unit.upper()
+        # Check for valid unit
         if unit not in self._valid_units:
             raise ValueError(F"Invalid unit: {unit}. Valid units are: {self._valid_units}")
 
         value = float(value)
         kelvin = self._to_kelvin(value, unit)
+        # check for negative kelvin value using the tolerance
         if kelvin < self._tolerance:
             raise ValueError("Temperature in Kelvin cannot be negative.")
 
@@ -18,7 +21,7 @@ class Temperature:
         self._unit = unit
 
     def _to_kelvin(self, value: float, unit: str) -> float:
-        """Check for negative kelvin value."""
+        """Converts a temperature value to Kelvin."""
         if unit == "K":
             return value
         elif unit == "C":
@@ -80,8 +83,42 @@ class Temperature:
         """ returns a readable string representation of the temperature."""
         return f"{self.value:.2f}°{self.unit}" if self.unit in ("C", "F") else f"{self.value:.2f} K"
 
+    # Using python special methods for comparing and kelvin as the conversion base
+    def __eq__(self, other: Temperature) -> bool:
+        """Checks if two temperature objects are equal: =="""
+        if not isinstance(other, Temperature):
+            return NotImplemented
+        return abs(self.to_kelvin() - other.to_kelvin()) < self._tolerance
 
-t = Temperature(-25, "c")
+    def __ne__(self, other: Temperature) -> bool:
+        """Checks if two temperature objects are not equal: !="""
+        return not self.__eq__(other)
+
+    def __lt__(self, other: Temperature) -> bool:
+        """Checks if this temperature is less than another: <"""
+        if not isinstance(other, Temperature):
+            return NotImplemented
+        return self.to_kelvin() < other.to_kelvin()
+
+    def __le__(self, other: Temperature) -> bool:
+        """Checks if this temperature is less than or equal to another: <="""
+        if not isinstance(other, Temperature):
+            return NotImplemented
+        return self.to_kelvin() <= other.to_kelvin()
+
+    def __gt__(self, other: Temperature) -> bool:
+        """Checks if this temperature is greater than another: >"""
+        if not isinstance(other, Temperature):
+            return NotImplemented
+        return self.to_kelvin() > other.to_kelvin()
+
+    def __ge__(self, other: Temperature) -> bool:
+        """Checks if this temperature is greater than or equal to another: >="""
+        if not isinstance(other, Temperature):
+            return NotImplemented
+        return self.to_kelvin() >= other.to_kelvin()
+
+t = Temperature(25, "c")
 print(t.convert_to("f"))
 print(t.convert_to("k"))   
 print(t.convert_to("C"))
@@ -90,3 +127,4 @@ print(t.convert_to("C"))
 print(repr(t))  
 print(str(t))
 
+print(Temperature(273.15, "k") == Temperature(1, "C"))
