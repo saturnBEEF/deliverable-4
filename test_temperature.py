@@ -123,3 +123,39 @@ def test_kelvin_to_fahrenheit(kelvin: float, expected_fahrenheit: float) -> None
     temperature = Temperature(kelvin, "K")
     result = temperature.to_fahrenheit()
     assert result == pytest.approx(expected_fahrenheit, abs=1e-9, rel=0)
+
+@pytest.mark.parametrize("celsius", [
+    -273.15, -40.0, 0.0, 37.0, 100.0
+])
+def test_round_trip(celsius: float) -> None:
+    """Test round-trip conversion from Celsius to Fahrenheit to Kelvin and back to Celsius."""
+    original = Temperature(celsius, "C")
+    fahrenheit = original.convert_to("F")
+    kelvin = fahrenheit.convert_to("K")
+    result = kelvin.convert_to("C")
+    assert result.unit == "C"
+    assert result.value == pytest.approx(celsius, abs=1e-9, rel=0)
+    assert result == original
+
+
+def test_cross_unit_equality() -> None:
+    """Test that temperatures in different units but representing the same physical temperature are equal."""
+    temp_c = Temperature(0, "C")
+    temp_f = Temperature(32, "F")
+    temp_k = Temperature(273.15, "K")
+    assert temp_c == temp_f
+    assert temp_c == temp_k
+    assert temp_f == temp_k
+    assert not (temp_c != temp_f)
+    assert not (temp_c != temp_k)
+    assert not (temp_f != temp_k)
+
+def test_cross_unit_ordering() -> None:
+    """Test that temperatures in different units can be compared correctly."""
+    temp_c = Temperature(0, "C")
+    temp_f = Temperature(212, "F")
+    assert temp_c < temp_f
+    assert temp_c <= temp_f
+    assert temp_f > temp_c
+    assert temp_f >= temp_c
+    assert temp_c != temp_f
