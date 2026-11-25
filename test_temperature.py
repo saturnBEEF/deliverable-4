@@ -159,3 +159,21 @@ def test_cross_unit_ordering() -> None:
     assert temp_f > temp_c
     assert temp_f >= temp_c
     assert temp_c != temp_f
+
+def test_str_format() -> None:
+    """Test the string representation of the Temperature class."""
+    temp_c = Temperature(25, "C")
+    temp_f = Temperature(77, "F")
+    temp_k = Temperature(298.15, "K")
+    assert str(temp_c) == "25.00°C"
+    assert str(temp_f) == "77.00°F"
+    assert str(temp_k) == "298.15 K"
+
+def test_repr_format() -> None:
+    """Test the repr representation of the Temperature class."""
+    temp_c = Temperature(25, "C")
+    temp_f = Temperature(77, "F")
+    temp_k = Temperature(300, "K")
+    assert repr(temp_c) == "Temperature(25.0, 'C')"
+    assert repr(temp_f) == "Temperature(77.0, 'F')"
+    assert repr(temp_k) == "Temperature(300.0, 'K')"
